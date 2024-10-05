@@ -1,0 +1,43 @@
+
+######
+pip install xxx -i http://pypi.doubanio.com/simple/ --trusted-host pypi.doubanio.com
+######
+
+python train.py --data pedestrians.yaml --cfg yolov3.yaml --weights /home/data/glw/hp/models/yolov3/yolov3.pt --epoch 20 --batch-size 4  # 对应train/exp2
+
+nohup python -u train.py --data pedestrians.yaml --cfg yolov3.yaml --weights /home/data/glw/hp/models/yolov3/yolov3.pt --epoch 50 --batch-size 4 > runInfo_2023-11-19-16-30.txt 2>&1 &  # pid: 45059 48536  对应train/exp4
+nohup python -u train.py --data pedestrians.yaml --cfg yolov5l.yaml --weights /home/data/glw/hp/models/yolov5/yolov5l.pt --epoch 50 --batch-size 4 > runInfo_2023-11-19-16-50.txt 2>&1 &  # pid: 42680  对应train/exp5
+nohup python -u train.py --data pedestrians.yaml --cfg yolov3-spp.yaml --weights /home/data/glw/hp/models/yolov3/yolov3-spp.pt --epoch 50 --batch-size 4 --device 0 > runInfo_2023-11-20-10-59.txt 2>&1 &  # pid: 42478   对应train/exp6
+
+nohup python -u train.py --data weldrobot_and_worker.yaml --cfg yolov5l.yaml --weights /home/data/glw/hp/models/yolov5/yolov5l.pt --epoch 50 --batch-size 4 --device 1 > runInfo_2023-11-22-17-19.txt 2>&1 &  # pid: 49662   对应train/exp7
+nohup python -u train.py --data FSIE_lab_scenario.yaml --cfg yolov5l.yaml --weights /home/data/glw/hp/models/yolov5/yolov5l.pt --epoch 50 --batch-size 4 --device 1 > runInfo_2023-12-14-21-16.txt 2>&1 &  # pid: 63174  对应train/exp8
+
+python train.py --data FSIE_lab_bev_scenario.yaml --cfg yolov5m.yaml --weights C:\Users\ping.he\Desktop\liam\weights\yolov5m.pt --epoch 50 --batch-size 2 --device 0
+
+python train.py --data FSIE_lab_bev_scenario.yaml --cfg yolov5m.yaml --weights C:\Users\SSHI\Desktop\heping\weights\yolov5m.pt --epoch 50 --batch-size 4 --device 0
+
+
+
+python detect.py --weights ./runs/train/exp7/weights/best.pt --source /home/data/glw/hp/datasets/weldrobot_and_worker/videos/BV1z24y197iR.mp4 --device 1
+python detect.py --weights ./runs/train/exp7/weights/best.pt --source /home/data/glw/hp/datasets/weldrobot_and_worker/videos/BV1Fb4y1C79W.mp4
+python detect.py --weights ./runs/train/exp7/weights/best.pt --source /home/data/glw/hp/datasets/weldrobot_and_worker/videos/BV1Sz4y1w7nA.mp4 --device 2
+python detect.py --weights ./runs/train/exp8/weights/best.pt --source /home/data/glw/hp/datasets/FSIE_lab_scenario/videos/FSIE.mp4 --device 2
+
+python detect.py --weights ./runs/train/exp3/weights/best.pt --source C:\Users\SSHI\Desktop\heping\datasets\bev_scenario.mp4 --device 0
+
+python detect_liam.py --weights /home/liam/Weights/yolov5m_fsie_bev_scenario/best.pt --source /home/liam/Datasets/bev_scenario.mp4 --device 0 --view-img
+python detect_liam.py --weights /home/liam/Weights/yolov5n_fsie_bev_scenario/best.pt --source /home/liam/Datasets/bev_scenario.mp4 --device 0 --view-img
+
+python detect_liam.py --weights /home/liam/Weights/yolov5n_fsie_bev_scenario/best.pt --source 0 --device 0 --view-img
+
+python detect_liam.py --weights /home/liam/Weights/dec_real_scenario/yolov5n/best.pt --source 0 --device 0 --view-img
+
+python detect_liam.py --weights /home/liam/Weights/dec_real_scenario/yolov5n/best.pt --source /home/liam/Projects/yolov3/dataset_process/dataset.mp4 --device 0 --view-img
+
+python detect_liam_multi_cam_serial.py --weights /home/liam/Weights/dec_real_scenario/yolov5n/best.pt --source 0 --device 0
+
+python export.py --weights /home/liam/Weights/dec_real_scenario/yolov5n/best.pt --include engine --device 0
+
+python detect_liam.py --weights /home/orangepi/liam/projects/weights/DEC_yolov5n/best.pt --source dataset_process/dataset0.mp4 --device 0 --view-img
+
+python export.py --weights /home/orangepi/liam/projects/weights/DEC_yolov5n/best.pt --img 640 --batch 1 --include onnx --opset 12
